@@ -1,0 +1,42 @@
+{
+  "name": "head",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "studio": "npm run dev --prefix design-studio",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0 -p 3000",
+    "lint": "next lint"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.100.0",
+    "@react-three/fiber": "^8.15.0",
+    "@studio-freight/react-lenis": "^0.0.47",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.18.0",
+    "next": "14.2.3",
+    "postcss": "^8",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^3.4.1",
+    "three": "^0.160.0",
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/three": "^0.160.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "playwright": "^1.61.0"
+  }
+}
