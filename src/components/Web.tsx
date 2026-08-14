@@ -23,6 +23,13 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Sync onActiveChange state change safely after render
+  useEffect(() => {
+    if (onActiveChange) {
+      onActiveChange(activeProject !== null);
+    }
+  }, [activeProject, onActiveChange]);
+
   // 1. Manage scroll lock on desktop and auto-close on mobile when folder is open
   useEffect(() => {
     if (activeProject === null) return;
@@ -37,9 +44,6 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
       // MOBILE: Auto-close folder on scroll
       const handleOuterScroll = () => {
         setActiveProject(null);
-        if (onActiveChange) {
-          onActiveChange(false);
-        }
       };
 
       if (lenis) {
@@ -57,7 +61,7 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
         window.removeEventListener("touchmove", handleOuterScroll);
       };
     }
-  }, [activeProject, onActiveChange]);
+  }, [activeProject]);
 
   // 2. Intercept back button / gestures on mobile
   useEffect(() => {
@@ -67,9 +71,6 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
 
     const handlePopState = (e: PopStateEvent) => {
       setActiveProject(null);
-      if (onActiveChange) {
-        onActiveChange(false);
-      }
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -80,16 +81,10 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
         window.history.back();
       }
     };
-  }, [activeProject, onActiveChange]);
+  }, [activeProject]);
 
   const handleClick = (idx: number) => {
-    setActiveProject(prev => {
-      const next = prev === idx ? null : idx;
-      if (onActiveChange) {
-        onActiveChange(next !== null);
-      }
-      return next;
-    });
+    setActiveProject(prev => (prev === idx ? null : idx));
   };
 
   return (
@@ -98,7 +93,7 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
       <div className="absolute inset-0">
         {/* Chapter header matching Skills layout */}
         <div className="absolute top-10 left-0 w-full text-center z-10 pointer-events-none px-6">
-          <span className="text-luxury-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block relative z-10">
+          <span className="text-luxury-gold text-xs md:text-sm font-gothic uppercase tracking-[0.25em] mb-3 block relative z-10">
             selected works
           </span>
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-white font-display relative z-10">
@@ -161,7 +156,7 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
                   className="absolute left-0 right-0 cursor-pointer pointer-events-auto [will-change:transform,opacity]"
                   style={{
                     top: `${defaultTopVH}vh`,
-                    height: isActive 
+                    height: isActive
                       ? (isDesktop ? '100%' : 'calc(100% - 5vh)')
                       : '480px',
                     zIndex,
@@ -171,249 +166,249 @@ const DeveloperPanelContent = ({ onActiveChange }: DeveloperPanelContentProps) =
                     transition,
                   }}
                 >
-                {/* w-full h-full relative replaced with absolute inset-0 to fix height propagation */}
-                <div
-                  className="absolute inset-0 [will-change:transform]"
-                  style={{
-                    transform: isHovered ? 'translateY(-22px)' : 'translateY(0px)',
-                    transition: 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
-                  }}
-                >
-                {/* ── TAB ─────────────────────────────────── */}
-                <div
-                  className="absolute top-0 min-w-[175px] max-w-[52%] px-[22px] rounded-t-xl flex items-center transition-all duration-300"
-                  style={{
-                    left: `${tabLeftPct}%`,
-                    height: `${TAB_H}px`,
-                    background: isHovered ? pal.tabBgHover : pal.tabBg,
-                    boxShadow: isActive
-                      ? '0 -6px 24px rgba(0,0,0,0.5)'
-                      : 'none',
-                  }}
-                >
-                  <span
-                    className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase whitespace-nowrap overflow-hidden text-ellipsis"
-                    style={{ color: pal.bodyText }}
-                  >
-                    ( {project.title} )
-                  </span>
-                </div>
-
-                {/* ── FOLDER BODY ──────────────────────────── */}
-                <div
-                  onClick={(e) => { if (isActive) e.stopPropagation(); }}
-                  onWheel={(e) => { if (isActive) e.stopPropagation(); }}
-                  onTouchMove={(e) => { if (isActive) e.stopPropagation(); }}
-                  data-lenis-prevent={isActive ? "true" : undefined}
-                  className="absolute left-0 right-0 bottom-0 rounded-tr-[14px] transition-shadow duration-300"
-                  style={{
-                    top: `${TAB_H - 1}px`,
-                    background: pal.folderBg,
-                    overflow: isActive ? 'auto' : 'hidden',
-                    boxShadow: isActive
-                      ? '0 28px 90px rgba(0,0,0,0.8), 0 8px 32px rgba(0,0,0,0.5)'
-                      : '0 8px 32px rgba(0,0,0,0.35)',
-                  }}
-                >
-                  {/* Preview metadata — visible only when closed */}
+                  {/* w-full h-full relative replaced with absolute inset-0 to fix height propagation */}
                   <div
-                    className="absolute top-[14px] left-[28px] right-[28px] flex justify-between items-center transition-opacity duration-300 pointer-events-none font-mono text-[9px] font-medium tracking-[0.22em] uppercase"
+                    className="absolute inset-0 [will-change:transform]"
                     style={{
-                      opacity: isActive ? 0 : 0.65,
-                      color: pal.bodyText,
+                      transform: isHovered ? 'translateY(-22px)' : 'translateY(0px)',
+                      transition: 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
                     }}
                   >
-                    <span>[ REF-{project.id}_SYS ]</span>
-                    <span className="hidden sm:inline" style={{ opacity: 0.75 }}>{project.tech}</span>
-                  </div>
-
-                  {/* Decorative ruled lines — visible when closed */}
-                  <div
-                    className="absolute inset-0 pt-[36px] px-[28px] pb-[18px] transition-opacity duration-200 pointer-events-none"
-                    style={{ opacity: isActive ? 0 : 1 }}
-                  >
-                    {[0.7, 0.55, 0.42, 0.3].map((w, i) => (
-                      <div
-                        key={i}
-                        className="h-[1px] mb-[14px]"
-                        style={{
-                          background: pal.lineColor,
-                          width: `${w * 100}%`,
-                        }}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Cover detail for the top/front folder — visible only when idle */}
-                  {activeProject === null && idx === 0 && (
+                    {/* ── TAB ─────────────────────────────────── */}
                     <div
-                      className="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center rounded-lg py-[36px] px-[48px] font-mono pointer-events-none text-center w-[80%] max-w-[460px] z-[5]"
+                      className="absolute top-0 min-w-[175px] max-w-[52%] px-[22px] rounded-t-xl flex items-center transition-all duration-300"
                       style={{
-                        border: `1px dashed ${pal.bodyText}40`,
-                        color: pal.bodyText,
+                        left: `${tabLeftPct}%`,
+                        height: `${TAB_H}px`,
+                        background: isHovered ? pal.tabBgHover : pal.tabBg,
+                        boxShadow: isActive
+                          ? '0 -6px 24px rgba(0,0,0,0.5)'
+                          : 'none',
                       }}
                     >
                       <span
-                        className="text-[18px] font-bold tracking-[0.18em] mb-[20px] uppercase"
-                        style={{ color: pal.titleText }}
-                      >
-                        [ DEVELOPER FOLDER ]
-                      </span>
-                      <div className="h-[1px] w-[60px] mb-[24px]" style={{ background: `${pal.bodyText}25` }} />
-                      <span className="text-[10px] tracking-[0.16em] uppercase leading-[1.7] opacity-80">
-                        CLICK ON ANY FOLDER TAB TO EXPAND SYSTEM AND VIEW PROJECT MODULES
-                      </span>
-                    </div>
-                  )}
-
-                  {/* ── CONTENT (fades in when active) ──────── */}
-                  <div
-                    data-lenis-prevent={isActive ? "true" : undefined}
-                    onWheel={(e) => { if (isActive) e.stopPropagation(); }}
-                    onTouchMove={(e) => { if (isActive) e.stopPropagation(); }}
-                    className="absolute inset-0 py-[48px] px-[64px] overflow-y-auto"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      transform: isActive ? 'translateY(0)' : 'translateY(20px)',
-                      transition: isActive
-                        ? 'opacity 0.35s ease 0.32s, transform 0.35s ease 0.32s'
-                        : 'opacity 0.15s ease, transform 0.15s ease',
-                      pointerEvents: isActive ? 'auto' : 'none',
-                    }}
-                  >
-                    {/* Top row */}
-                    <div className="flex justify-between items-center mb-10">
-                      <span
-                        className="text-[15px] font-mono tracking-[0.14em] leading-[1.4] opacity-50 uppercase"
+                        className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase whitespace-nowrap overflow-hidden text-ellipsis"
                         style={{ color: pal.bodyText }}
                       >
-                        [{project.id}] — ENGINEERING CATALOGUE
+                        ( {project.title} )
                       </span>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveProject(null);
-                          if (onActiveChange) {
-                            onActiveChange(false);
-                          }
-                        }}
-                        className="text-[11px] font-mono tracking-[0.12em] bg-transparent py-[6px] px-[18px] cursor-pointer opacity-80 uppercase transition-colors duration-200 hover:bg-white/10"
-                        style={{
-                          color: pal.bodyText,
-                          borderColor: `${pal.bodyText}40`,
-                        }}
-                      >
-                        [ CLOSE ]
-                      </button>
                     </div>
 
-                    {/* Project title */}
-                    <h2
-                      className="font-black tracking-tighter leading-[1.08] mb-[36px] uppercase font-display"
+                    {/* ── FOLDER BODY ──────────────────────────── */}
+                    <div
+                      onClick={(e) => { if (isActive) e.stopPropagation(); }}
+                      onWheel={(e) => { if (isActive) e.stopPropagation(); }}
+                      onTouchMove={(e) => { if (isActive) e.stopPropagation(); }}
+                      data-lenis-prevent={isActive ? "true" : undefined}
+                      className="absolute left-0 right-0 bottom-0 rounded-tr-[14px] transition-shadow duration-300"
                       style={{
-                        color: pal.titleText,
-                        fontSize: 'clamp(2rem, 3.8vw, 3rem)',
+                        top: `${TAB_H - 1}px`,
+                        background: pal.folderBg,
+                        overflow: isActive ? 'auto' : 'hidden',
+                        boxShadow: isActive
+                          ? '0 28px 90px rgba(0,0,0,0.8), 0 8px 32px rgba(0,0,0,0.5)'
+                          : '0 8px 32px rgba(0,0,0,0.35)',
                       }}
                     >
-                      {project.title}
-                    </h2>
+                      {/* Preview metadata — visible only when closed */}
+                      <div
+                        className="absolute top-[14px] left-[28px] right-[28px] flex justify-between items-center transition-opacity duration-300 pointer-events-none font-mono text-[9px] font-medium tracking-[0.22em] uppercase"
+                        style={{
+                          opacity: isActive ? 0 : 0.65,
+                          color: pal.bodyText,
+                        }}
+                      >
+                        <span>[ REF-{project.id}_SYS ]</span>
+                        <span className="hidden sm:inline" style={{ opacity: 0.75 }}>{project.tech}</span>
+                      </div>
 
-                    {/* Two-column content */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-11">
-                      <div className="max-w-[540px]">
-                        <span
-                          className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] uppercase mb-[22px]"
-                          style={{ color: pal.accent }}
-                        >
-                          OBJECTIVE.
-                        </span>
-                        <p className="text-[1.02rem] leading-[1.78] opacity-90 mb-4" style={{ color: pal.bodyText }}>
-                          {project.objective}
-                        </p>
-                        <ul className="list-none pl-0 m-0">
-                          {project.objectivePoints.map((pt, i) => (
-                            <li
-                              key={i}
-                              className="text-[0.94rem] leading-[1.6] opacity-80 mb-[10px] flex gap-[10px] items-start"
-                              style={{ color: pal.bodyText }}
-                            >
-                              <span className="text-[1.1rem] leading-none" style={{ color: pal.accent }}>•</span>
-                              <span>{pt}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      {/* Decorative ruled lines — visible when closed */}
+                      <div
+                        className="absolute inset-0 pt-[36px] px-[28px] pb-[18px] transition-opacity duration-200 pointer-events-none"
+                        style={{ opacity: isActive ? 0 : 1 }}
+                      >
+                        {[0.7, 0.55, 0.42, 0.3].map((w, i) => (
+                          <div
+                            key={i}
+                            className="h-[1px] mb-[14px]"
+                            style={{
+                              background: pal.lineColor,
+                              width: `${w * 100}%`,
+                            }}
+                          />
+                        ))}
                       </div>
-                      <div className="max-w-[540px]">
-                        <span
-                          className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] uppercase mb-[22px]"
-                          style={{ color: pal.accent }}
-                        >
-                          EXECUTION.
-                        </span>
-                        <p className="text-[1.02rem] leading-[1.78] opacity-90 mb-4" style={{ color: pal.bodyText }}>
-                          {project.how}
-                        </p>
-                        <ul className="list-none pl-0 m-0">
-                          {project.howPoints.map((pt, i) => (
-                            <li
-                              key={i}
-                              className="text-[0.94rem] leading-[1.6] opacity-80 mb-[10px] flex gap-[10px] items-start"
-                              style={{ color: pal.bodyText }}
-                            >
-                              <span className="text-[1.1rem] leading-none" style={{ color: pal.accent }}>•</span>
-                              <span>{pt}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
 
-                    {/* Footer: tech stack + CTA */}
-                    <div
-                      className="border-t pt-6 flex justify-between items-center flex-wrap gap-4"
-                      style={{ borderTopColor: `${pal.bodyText}18` }}
-                    >
-                      <div>
-                        <span
-                          className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] opacity-50 uppercase mb-4"
-                          style={{ color: pal.bodyText }}
-                        >
-                          TECH STACK
-                        </span>
-                        <span className="text-[0.94rem] font-mono tracking-[0.12em] uppercase" style={{ color: pal.bodyText }}>
-                          {project.tech}
-                        </span>
-                      </div>
-                      <div className="flex gap-3">
-                        <a
-                          href={project.liveLink || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="py-3 px-6 text-[11px] font-mono tracking-[0.2em] uppercase font-bold cursor-pointer border-none transition-opacity hover:opacity-90 flex items-center justify-center no-underline"
+                      {/* Cover detail for the top/front folder — visible only when idle */}
+                      {activeProject === null && idx === 0 && (
+                        <div
+                          className="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center rounded-lg py-[36px] px-[48px] font-mono pointer-events-none text-center w-[80%] max-w-[460px] z-[5]"
                           style={{
-                            background: pal.accent,
-                            color: 'var(--projects-btn-text, #061810)',
-                          }}
-                        >
-                          VIEW PROJECT →
-                        </a>
-                        <a
-                          href={project.gitLink || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="py-3 px-6 bg-transparent text-[11px] font-mono tracking-[0.2em] uppercase cursor-pointer border border-solid transition-colors hover:bg-white/5 flex items-center justify-center no-underline"
-                          style={{
+                            border: `1px dashed ${pal.bodyText}40`,
                             color: pal.bodyText,
-                            borderColor: `${pal.bodyText}30`,
                           }}
                         >
-                          GITHUB
-                        </a>
+                          <span
+                            className="text-[18px] font-bold tracking-[0.18em] mb-[20px] uppercase"
+                            style={{ color: pal.titleText }}
+                          >
+                            [ DEVELOPER FOLDER ]
+                          </span>
+                          <div className="h-[1px] w-[60px] mb-[24px]" style={{ background: `${pal.bodyText}25` }} />
+                          <span className="text-[10px] tracking-[0.16em] uppercase leading-[1.7] opacity-80">
+                            CLICK ON ANY FOLDER TAB TO EXPAND SYSTEM AND VIEW PROJECT MODULES
+                          </span>
+                        </div>
+                      )}
+
+                      {/* ── CONTENT (fades in when active) ──────── */}
+                      <div
+                        data-lenis-prevent={isActive ? "true" : undefined}
+                        onWheel={(e) => { if (isActive) e.stopPropagation(); }}
+                        onTouchMove={(e) => { if (isActive) e.stopPropagation(); }}
+                        className="absolute inset-0 py-[48px] px-[64px] overflow-y-auto"
+                        style={{
+                          opacity: isActive ? 1 : 0,
+                          transform: isActive ? 'translateY(0)' : 'translateY(20px)',
+                          transition: isActive
+                            ? 'opacity 0.35s ease 0.32s, transform 0.35s ease 0.32s'
+                            : 'opacity 0.15s ease, transform 0.15s ease',
+                          pointerEvents: isActive ? 'auto' : 'none',
+                        }}
+                      >
+                        {/* Top row */}
+                        <div className="flex justify-between items-center mb-10">
+                          <span
+                            className="text-[15px] font-mono tracking-[0.14em] leading-[1.4] opacity-50 uppercase"
+                            style={{ color: pal.bodyText }}
+                          >
+                            [{project.id}] — ENGINEERING CATALOGUE
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveProject(null);
+                              if (onActiveChange) {
+                                onActiveChange(false);
+                              }
+                            }}
+                            className="text-[11px] font-mono tracking-[0.12em] bg-transparent py-[6px] px-[18px] cursor-pointer opacity-80 uppercase transition-colors duration-200 hover:bg-white/10"
+                            style={{
+                              color: pal.bodyText,
+                              borderColor: `${pal.bodyText}40`,
+                            }}
+                          >
+                            [ CLOSE ]
+                          </button>
+                        </div>
+
+                        {/* Project title */}
+                        <h2
+                          className="font-black tracking-tighter leading-[1.08] mb-[36px] uppercase font-display"
+                          style={{
+                            color: pal.titleText,
+                            fontSize: 'clamp(2rem, 3.8vw, 3rem)',
+                          }}
+                        >
+                          {project.title}
+                        </h2>
+
+                        {/* Two-column content */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-11">
+                          <div className="max-w-[540px]">
+                            <span
+                              className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] uppercase mb-[22px]"
+                              style={{ color: pal.accent }}
+                            >
+                              OBJECTIVE.
+                            </span>
+                            <p className="text-[1.02rem] leading-[1.78] opacity-90 mb-4" style={{ color: pal.bodyText }}>
+                              {project.objective}
+                            </p>
+                            <ul className="list-none pl-0 m-0">
+                              {project.objectivePoints.map((pt, i) => (
+                                <li
+                                  key={i}
+                                  className="text-[0.94rem] leading-[1.6] opacity-80 mb-[10px] flex gap-[10px] items-start"
+                                  style={{ color: pal.bodyText }}
+                                >
+                                  <span className="text-[1.1rem] leading-none" style={{ color: pal.accent }}>•</span>
+                                  <span>{pt}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="max-w-[540px]">
+                            <span
+                              className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] uppercase mb-[22px]"
+                              style={{ color: pal.accent }}
+                            >
+                              EXECUTION.
+                            </span>
+                            <p className="text-[1.02rem] leading-[1.78] opacity-90 mb-4" style={{ color: pal.bodyText }}>
+                              {project.how}
+                            </p>
+                            <ul className="list-none pl-0 m-0">
+                              {project.howPoints.map((pt, i) => (
+                                <li
+                                  key={i}
+                                  className="text-[0.94rem] leading-[1.6] opacity-80 mb-[10px] flex gap-[10px] items-start"
+                                  style={{ color: pal.bodyText }}
+                                >
+                                  <span className="text-[1.1rem] leading-none" style={{ color: pal.accent }}>•</span>
+                                  <span>{pt}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/* Footer: tech stack + CTA */}
+                        <div
+                          className="border-t pt-6 flex justify-between items-center flex-wrap gap-4"
+                          style={{ borderTopColor: `${pal.bodyText}18` }}
+                        >
+                          <div>
+                            <span
+                              className="block text-[20px] font-mono tracking-[0.14em] leading-[1.4] opacity-50 uppercase mb-4"
+                              style={{ color: pal.bodyText }}
+                            >
+                              TECH STACK
+                            </span>
+                            <span className="text-[0.94rem] font-mono tracking-[0.12em] uppercase" style={{ color: pal.bodyText }}>
+                              {project.tech}
+                            </span>
+                          </div>
+                          <div className="flex gap-3">
+                            <a
+                              href={project.liveLink || "#"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="py-3 px-6 text-[11px] font-mono tracking-[0.2em] uppercase font-bold cursor-pointer border-none transition-opacity hover:opacity-90 flex items-center justify-center no-underline"
+                              style={{
+                                background: pal.accent,
+                                color: 'var(--projects-btn-text, #061810)',
+                              }}
+                            >
+                              VIEW PROJECT →
+                            </a>
+                            <a
+                              href={project.gitLink || "#"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="py-3 px-6 bg-transparent text-[11px] font-mono tracking-[0.2em] uppercase cursor-pointer border border-solid transition-colors hover:bg-white/5 flex items-center justify-center no-underline"
+                              style={{
+                                color: pal.bodyText,
+                                borderColor: `${pal.bodyText}30`,
+                              }}
+                            >
+                              GITHUB
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                </div>
                 </div>
               </motion.div>
             );

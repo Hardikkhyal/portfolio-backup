@@ -5,7 +5,6 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Code, Cpu } from "lucide-react";
-import FloatingStars from "./ui/FloatingStars";
 import { motion } from "framer-motion";
 
 if (typeof window !== "undefined") {
@@ -86,30 +85,8 @@ export default function Journey() {
       const height = svgRect.height;
       const centerX = width / 2;
 
-      let d = `M ${centerX} 0`;
-
-      if (coords.length > 0) {
-
-        const first = coords[0];
-        d += ` L ${centerX} ${first.y - 80}`;
-        d += ` C ${centerX} ${first.y - 40}, ${first.x} ${first.y - 40}, ${first.x} ${first.y}`;
-
-
-        for (let i = 0; i < coords.length - 1; i++) {
-          const curr = coords[i];
-          const next = coords[i + 1];
-          const dy = next.y - curr.y;
-
-          d += ` C ${curr.x} ${curr.y + dy * 0.45}, ${next.x} ${next.y - dy * 0.45}, ${next.x} ${next.y}`;
-        }
-
-
-        const last = coords[coords.length - 1];
-        d += ` C ${last.x} ${last.y + 40}, ${centerX} ${last.y + 40}, ${centerX} ${last.y + 80}`;
-        d += ` L ${centerX} ${height}`;
-      } else {
-        d += ` L ${centerX} ${height}`;
-      }
+      // Clean, perfectly straight vertical timeline line
+      const d = `M ${centerX} 0 L ${centerX} ${height}`;
 
       setPathD(d);
 
@@ -289,9 +266,6 @@ export default function Journey() {
         }}
       >
 
-        {/* <FloatingStars /> */}
-
-
         <div
           ref={contentRef}
           className="relative w-full py-12 pb-20"
@@ -310,7 +284,7 @@ export default function Journey() {
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-center w-full mb-10 relative z-30"
             >
-              <span className="text-luxury-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block">
+              <span className="text-luxury-gold text-xs md:text-sm font-gothic uppercase tracking-[0.25em] mb-3 block">
                 academic timeline
               </span>
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-white font-display">
@@ -451,7 +425,7 @@ export default function Journey() {
                                     {item.title}
                                   </h3>
                                 </div>
-                                <div 
+                                <div
                                   className="p-3 rounded-2xl border transition-colors duration-300"
                                   style={{
                                     backgroundColor: "var(--journey-badge-bg, #1c5038)",
@@ -463,7 +437,7 @@ export default function Journey() {
                               </div>
 
                               <div className="flex flex-wrap gap-2.5 mb-6 ml-4 md:ml-0">
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full uppercase font-bold tracking-wider"
                                   style={{
                                     backgroundColor: "var(--journey-badge-alt-bg, rgba(28, 48, 40, 0.1))",
@@ -473,7 +447,7 @@ export default function Journey() {
                                 >
                                   {item.institution}
                                 </span>
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full uppercase font-black tracking-wider"
                                   style={{
                                     backgroundColor: "var(--journey-badge-bg, #1c5038)",
@@ -483,7 +457,7 @@ export default function Journey() {
                                 >
                                   {item.badge}
                                 </span>
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full font-mono"
                                   style={{
                                     backgroundColor: "var(--journey-badge-alt-bg-subtle, rgba(28, 48, 40, 0.05))",
@@ -551,7 +525,7 @@ export default function Journey() {
                                     {item.title}
                                   </h3>
                                 </div>
-                                <div 
+                                <div
                                   className="p-3 rounded-2xl border transition-colors duration-300"
                                   style={{
                                     backgroundColor: "var(--journey-badge-bg, #1c5038)",
@@ -563,7 +537,7 @@ export default function Journey() {
                               </div>
 
                               <div className="flex flex-wrap gap-2.5 mb-6 ml-4 md:ml-0">
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full uppercase font-bold tracking-wider"
                                   style={{
                                     backgroundColor: "var(--journey-badge-alt-bg, rgba(28, 48, 40, 0.1))",
@@ -573,7 +547,7 @@ export default function Journey() {
                                 >
                                   {item.institution}
                                 </span>
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full uppercase font-black tracking-wider"
                                   style={{
                                     backgroundColor: "var(--journey-badge-bg, #1c5038)",
@@ -583,7 +557,7 @@ export default function Journey() {
                                 >
                                   {item.badge}
                                 </span>
-                                <span 
+                                <span
                                   className="text-[0.625rem] border px-2.5 py-1 rounded-full font-mono"
                                   style={{
                                     backgroundColor: "var(--journey-badge-alt-bg-subtle, rgba(28, 48, 40, 0.05))",

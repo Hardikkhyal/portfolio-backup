@@ -130,9 +130,9 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
           <motion.span
             ref={titleRef}
             style={!mounted || isMobile ? {} : { opacity: titleOpacity, scale: titleScale, y: titleY }}
-            className="text-luxury-gold text-xs md:text-sm font-semibold uppercase tracking-widest mb-4"
+            className="text-luxury-gold text-2xl sm:text-3xl md:text-4xl font-script tracking-wide mb-2 select-none"
           >
-            F U L L - S T A C K   D E V E L O P E R   &   D E S I G N E R
+            Full Stack Developer & Designer
           </motion.span>
 
           <motion.h1
@@ -184,13 +184,13 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
       {isServiceModalOpen && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
           {/* Dark backing overlay */}
-          <div 
-            className="absolute inset-0 bg-black/75 backdrop-blur-md cursor-pointer pointer-events-auto" 
+          <div
+            className="absolute inset-0 bg-black/75 backdrop-blur-md cursor-pointer pointer-events-auto"
             onClick={() => setIsServiceModalOpen(false)}
           />
-          
+
           {/* Modal Card */}
-          <div 
+          <div
             className="relative w-full max-w-xl bg-zinc-900/90 border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col items-center justify-center text-center z-10 pointer-events-auto"
             style={{
               boxShadow: "0 0 50px rgba(0,0,0,0.8), inset 0 1px 0 0 rgba(255,255,255,0.05)"
@@ -206,7 +206,7 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
             <p className="text-white/45 text-xs md:text-sm max-w-md leading-relaxed mb-8">
               Select a category below to instantly draft a customized message and start a chat on WhatsApp.
             </p>
-            
+
             {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
               {services.map((s, idx) => {

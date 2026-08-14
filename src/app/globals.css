@@ -15,7 +15,23 @@
 
 html,
 body {
-  font-family: 'Kanit', var(--font-inter), sans-serif;
+  font-family: 'Kanit', 'League Gothic', var(--font-inter), sans-serif;
+}
+
+.font-gothic {
+  font-family: 'League Gothic', 'Druk Trial', sans-serif;
+}
+
+.font-script {
+  font-family: "Ms Madi", cursive;
+}
+
+.font-limelight {
+  font-family: "Limelight", sans-serif;
+}
+
+.font-fleur {
+  font-family: "Fleur De Leah", cursive;
 }
 
 html {
@@ -496,7 +512,7 @@ html.lenis body {
   font-family: 'Kanit', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.25em;
   font-size: 13px;
   cursor: pointer;
   background: none;
@@ -555,33 +571,35 @@ html.lenis body {
 }
 
 .bb-content p {
-  font-size: clamp(1.5rem, 5vw, 2.75rem);
-  line-height: 1.3;
-  color: var(--contact-paragraph-color, #fff);
-  font-family: 'League Gothic', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: clamp(1.25rem, 3.2vw, 2.25rem);
+  line-height: 1.6;
+  color: #ffffff;
+  font-family: 'Kanit', var(--font-inter), sans-serif;
+  letter-spacing: 0.02em;
   margin-bottom: 2rem;
+  font-weight: 300;
 }
 
 .bb-reset {
-  font-family: 'Kanit', sans-serif;
-  font-size: 12px;
+  font-family: 'League Gothic', 'Kanit', sans-serif;
+  font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--contact-reset-text, #5ca370);
-  background: none;
-  border: 1px solid rgba(92, 163, 112, 0.3);
-  padding: 8px 24px;
-  border-radius: 20px;
+  letter-spacing: 0.25em;
+  color: var(--brand-yellow, #FFEDA8);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 237, 168, 0.3);
+  padding: 12px 32px;
+  border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .bb-reset:hover {
-  background: var(--contact-reset-hover-bg, #19350C);
-  color: var(--contact-reset-hover-text, #fff);
-  border-color: var(--contact-reset-hover-bg, #19350C);
+  background: var(--brand-yellow, #FFEDA8);
+  color: #000;
+  border-color: var(--brand-yellow, #FFEDA8);
+  box-shadow: 0 0 25px rgba(255, 237, 168, 0.4);
 }
 
 
@@ -896,7 +914,8 @@ html.lenis body {
     width: 100vw;
     position: relative;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 5vh;
     padding-top: 0;
     /* Reset for desktop layout */
   }
@@ -904,14 +923,14 @@ html.lenis body {
   .ktp-root .item {
     width: 21vw;
     padding: 0;
-    margin: auto 1.25vw var(--base);
+    margin: 0 1.25vw 0 !important;
   }
 
-  /* Stagger margins disabled for even alignment */
+  /* Ensure all cards align horizontally on the exact same baseline */
   .ktp-root .item:nth-child(2),
   .ktp-root .item:nth-child(3),
   .ktp-root .item:nth-child(4) {
-    margin-bottom: var(--base);
+    margin-bottom: 0 !important;
   }
 
   .ktp-root .item__caption-description {

@@ -1,20 +1,21 @@
 "use client";
 
 import { Phone, Mail } from "lucide-react";
+import { LENIS_EASING, LENIS_DEFAULT_DURATION } from "@/lib/utils";
 
 export default function Navbar() {
   return (
     <>
-      
+
       <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black/80 to-transparent md:border-b md:border-white/[0.03] md:backdrop-blur-[4px] py-5 px-6 md:px-12 flex items-center justify-between">
-        
+
         <div>
           <a href="#" className="font-display text-lg md:text-xl font-extrabold tracking-widest text-white uppercase group transition-all duration-300">
             hardik khyal <span className="text-luxury-gold transition-colors group-hover:text-white">®</span>
           </a>
         </div>
 
-        
+
         <nav className="hidden md:flex items-center gap-8">
           {[
             { label: "About", id: "about-me" },
@@ -29,7 +30,10 @@ export default function Navbar() {
                 const target = document.getElementById(item.id);
                 if (target) {
                   if ((window as any).lenis) {
-                    (window as any).lenis.scrollTo(target, { duration: 2.2 });
+                    (window as any).lenis.scrollTo(target, {
+                      duration: LENIS_DEFAULT_DURATION,
+                      easing: LENIS_EASING,
+                    });
                   } else {
                     target.scrollIntoView({ behavior: "smooth" });
                   }
@@ -42,7 +46,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        
+
         <div className="flex items-center gap-6">
           <a
             href="tel:+919876543210"

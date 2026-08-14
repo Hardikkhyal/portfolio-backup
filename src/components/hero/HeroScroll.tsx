@@ -181,6 +181,7 @@ export default function HeroScroll() {
           
           <canvas
             ref={canvasRef}
+            style={{ filter: "blur(1.5px)" }}
             className="absolute top-0 left-0 w-full h-full object-cover block will-change-transform z-10 hero-canvas"
           />
 

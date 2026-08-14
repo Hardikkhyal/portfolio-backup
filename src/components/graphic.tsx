@@ -10,13 +10,9 @@ const ITEMS = [
   {
     id: "article-1",
     img: "/gallery-big/img1.jpg",
-    title: "01 — artwork",
-    caption: "I, D-503, the builder of the Integral, I am only one of the many mathematicians of the United State.",
-    largeImg: "/gallery-big/img1.jpg",
+    title: "01 — Cover",
     number: "01",
-    articleTitle: "artwork",
-    intro: "I, D-503, the builder of the Integral.",
-    description: "The great historic hour is near, when the first Integral will rise into the limitless space of the universe.",
+    articleTitle: "Cover",
     extraImages: [
       "/gallery/sketches/img1.jpg",
       "/gallery/sketches/img2.jpg",
@@ -27,13 +23,9 @@ const ITEMS = [
   {
     id: "article-2",
     img: "/gallery-big/img2.jpg",
-    title: "02 — logo",
-    caption: "From behind the Green Wall from some unknown plains the wind brings to us the yellow honeyed pollen of flowers.",
-    largeImg: "/gallery-big/img2.jpg",
+    title: "02 — Poster",
     number: "02",
-    articleTitle: "logo",
-    intro: "From behind the Green Wall the wind brings honeyed pollen of flowers.",
-    description: "One's lips are dry from this sweet dust. Every moment one passes one's tongue over them.",
+    articleTitle: "Poster",
     extraImages: [
       "/gallery/graphic-design/img1.jpg",
       "/gallery/graphic-design/img2.jpg",
@@ -44,13 +36,9 @@ const ITEMS = [
   {
     id: "article-3",
     img: "/gallery-big/img3.jpg",
-    title: "03 — graphic designer",
-    caption: "I looked over all that I wrote down yesterday and I find that my descriptions are not sufficiently clear.",
-    largeImg: "/gallery-big/img3.jpg",
+    title: "03 — Logo",
     number: "03",
-    articleTitle: "graphic designer",
-    intro: "I looked over all that I wrote down yesterday.",
-    description: "That is, everything would undoubtedly be clear to one of us but who knows to whom my Integral will some day bring these records.",
+    articleTitle: "Logo",
     extraImages: [
       "/gallery/photography/img1.jpg",
       "/gallery/photography/img2.jpg",
@@ -61,13 +49,9 @@ const ITEMS = [
   {
     id: "article-4",
     img: "/gallery-big/img4.jpg",
-    title: "04 — webproject",
-    caption: "The auditorium: an enormous half-globe of glass with the sun piercing through.",
-    largeImg: "/gallery-big/img4.jpg",
+    title: "04 — Banner",
     number: "04",
-    articleTitle: "webproject",
-    intro: "The auditorium: an enormous half-globe of glass with the sun piercing through.",
-    description: "The circular rows of noble, globe-like, closely-shaven heads. With joy in my heart I looked around.",
+    articleTitle: "Banner",
     extraImages: [
       "/gallery/web-projects/img1.jpg",
       "/gallery/web-projects/img2.jpg",
@@ -399,26 +383,26 @@ export default function Projects() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        className="absolute top-24 left-0 w-full text-center z-10 pointer-events-none px-6"
+        className="absolute top-20 md:top-24 left-0 w-full text-center z-10 pointer-events-none px-6"
       >
-        <span className="text-luxury-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block relative z-10">
+        <span className="text-luxury-gold text-xs md:text-sm font-gothic uppercase tracking-[0.25em] mb-2 block relative z-10">
           selected works
         </span>
-        <h2 
-          className="text-4xl md:text-6xl font-black uppercase tracking-tight font-display relative z-10 mt-8 md:mt-12"
+        <h2
+          className="text-4xl md:text-6xl font-black uppercase tracking-tight font-display relative z-10 mt-2 md:mt-3"
           style={{ color: "var(--graphic-title-color, #ffffff)" }}
         >
           Graphic Design
         </h2>
-        <div className="h-[2px] w-16 bg-luxury-gold mx-auto mt-6 relative z-10" />
+        <div className="h-[2px] w-16 bg-luxury-gold mx-auto mt-4 relative z-10" />
       </motion.div>
 
       {/* items grid */}
       <section className="item-wrap">
         {ITEMS.map((it, idx) => (
-          <figure 
-            key={it.id} 
-            className="item" 
+          <figure
+            key={it.id}
+            className="item"
             data-article={it.id}
             data-aos="fade-up"
             data-aos-delay={idx * 150}

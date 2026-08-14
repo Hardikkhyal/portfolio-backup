@@ -9,9 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-kanit)", "var(--font-inter)", "sans-serif"],
-        display: ["var(--font-outfit)", "sans-serif"],
+        sans: ["var(--font-kanit)", "'League Gothic'", "var(--font-inter)", "sans-serif"],
+        display: ["var(--font-outfit)", "var(--font-kanit)", "sans-serif"],
         kanit: ["var(--font-kanit)", "sans-serif"],
+        gothic: ["'League Gothic'", "'Druk Trial'", "sans-serif"],
+        script: ["'Ms Madi'", "cursive"],
+        limelight: ["'Limelight'", "sans-serif"],
+        fleur: ["'Fleur De Leah'", "cursive"],
       },
       colors: {
         brand: {

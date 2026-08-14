@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { LENIS_EASING, LENIS_DEFAULT_DURATION } from "@/lib/utils";
 
 export interface MagneticConfig {
   id: string;
@@ -14,9 +15,6 @@ let isSnapping = false;
 let cooldownActive = false;
 let scrollTimeout: NodeJS.Timeout | null = null;
 let globalListenerAdded = false;
-
-// Smooth cubic/quartic-out easing curve for a gentler, more premium attraction feel
-const smoothCubicOut = (t: number): number => 1 - Math.pow(1 - t, 3.5);
 
 const startCooldown = () => {
   cooldownActive = true;
@@ -73,11 +71,11 @@ const evaluateSnapping = () => {
       return;
     }
 
-    // Trigger the magnetic attraction snap
+    // Trigger the magnetic attraction snap using standard LENIS_EASING
     isSnapping = true;
     lenis.scrollTo(targetScrollY, {
       duration: bestSection.duration,
-      easing: smoothCubicOut,
+      easing: LENIS_EASING,
       onComplete: () => {
         isSnapping = false;
         startCooldown();
@@ -97,7 +95,7 @@ const handleScroll = (lenis: any) => {
 
 export function useMagneticScroll({
   threshold = 0.65,
-  duration = 1.4,
+  duration = LENIS_DEFAULT_DURATION,
   offset = 0,
   enabled = true,
 }: Partial<Omit<MagneticConfig, "id" | "element">>) {

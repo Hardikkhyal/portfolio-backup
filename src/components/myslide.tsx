@@ -112,7 +112,7 @@ export default function AboutMe() {
             data-radial-text-marquee-spacer-color="#fff"
             className="radial-text-marquee"
           >
-            <h2 data-radial-text-marquee-text="" className="red">Founder</h2>
+            <h2 data-radial-text-marquee-text="" className="red"> Experiences</h2>
           </div>
 
           <div
@@ -124,7 +124,7 @@ export default function AboutMe() {
             className="radial-text-marquee script"
           >
             <h3 data-radial-text-marquee-text="">
-              Creator
+              Crafting
             </h3>
           </div>
         </div>
@@ -144,11 +144,11 @@ export default function AboutMe() {
             data-radial-text-marquee-speed="2"
             data-radial-text-marquee-radius="8"
             data-radial-text-marquee-spacer="."
-            data-radial-text-marquee-spacer-color="#19350C"
+            data-radial-text-marquee-spacer-color="#fff"
             className="radial-text-marquee"
           >
             <h2 data-radial-text-marquee-text="" className="red">
-              Producer
+              Design
             </h2>
           </div>
 
@@ -160,7 +160,7 @@ export default function AboutMe() {
             data-radial-text-marquee-spacer-color="#fff"
             className="radial-text-marquee script"
           >
-            <h3 data-radial-text-marquee-text="">Executive</h3>
+            <h3 data-radial-text-marquee-text="">Engineer</h3>
           </div>
         </div>
       </section>
@@ -179,11 +179,11 @@ export default function AboutMe() {
             data-radial-text-marquee-speed="2"
             data-radial-text-marquee-radius="8"
             data-radial-text-marquee-spacer="."
-            data-radial-text-marquee-spacer-color="#19350C"
+            data-radial-text-marquee-spacer-color="#fff"
             className="radial-text-marquee"
           >
             <h2 data-radial-text-marquee-text="" className="red">
-              Psychic
+              Creative
             </h2>
           </div>
 
@@ -195,7 +195,7 @@ export default function AboutMe() {
             data-radial-text-marquee-spacer-color="#fff"
             className="radial-text-marquee script"
           >
-            <h3 data-radial-text-marquee-text="">Celebrity</h3>
+            <h3 data-radial-text-marquee-text="">Developer</h3>
           </div>
         </div>
       </section>

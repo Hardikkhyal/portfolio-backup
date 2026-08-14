@@ -51,7 +51,7 @@ export default function Footer() {
     const marquees = [
         { text: "CREATIVE DEVELOPER // PORTFOLIO // LEMA.WEB // FUTURE INTERFACES // AWWWARDS STYLE // ", dir: "left" },
         { text: "IMMERSIVE EXPERIENCE // WEBGL // GSAP // REACT // SMOOTH SCROLLING // TAILWIND // ", dir: "right" },
-        { text: "LEESHARK // INNOVATIVE CODE // MODERN BRANDING // LUXURY DESIGN // ", dir: "left" },
+        { text: "hardikkhyal // INNOVATIVE CODE // MODERN BRANDING // LUXURY DESIGN // ", dir: "left" },
         { text: "AESTHETIC LAYOUTS // SCROLLTRIGGER // LENIS // PHYSICAL ANIMATION // ", dir: "right" }
     ];
 
@@ -59,8 +59,8 @@ export default function Footer() {
         <footer
             className="relative w-full py-24 px-6 md:px-12 lg:px-24 overflow-hidden z-30 select-none flex flex-col items-center"
             style={{
-              backgroundColor: "var(--footer-bg, #19350C)",
-              color: "var(--footer-link-color, #a8d4b8)"
+                backgroundColor: "var(--footer-bg, #19350C)",
+                color: "var(--footer-link-color, #a8d4b8)"
             }}
         >
             {/* BACKGROUND TEXT MARQUEES - LAYERED VISUAL DEPTH */}
@@ -85,7 +85,7 @@ export default function Footer() {
             <div className="w-full max-w-5xl flex flex-col items-center z-10 relative text-center">
 
                 {/* Floating Profile Image Placeholder (leaving hero image blank/logo placeholder as requested) */}
-                <div 
+                <div
                     className="relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 bg-zinc-950 shadow-2xl animate-float group cursor-pointer mb-6 flex items-center justify-center"
                     style={{ borderColor: "var(--footer-avatar-border, #a8d4b8)" }}
                 >
@@ -123,8 +123,8 @@ export default function Footer() {
                         <span style={{ color: "var(--footer-brand-color, #c8f0d8)" }}>HARDIK</span>
                         <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">KHYAL</span>
                     </div>
-                    <p 
-                        className="text-[10px] font-black tracking-[0.25em] uppercase"
+                    <p
+                        className="text-[11px] md:text-xs font-gothic tracking-[0.25em] uppercase"
                         style={{ color: "var(--footer-sub-text, rgba(168, 212, 180, 0.8))" }}
                     >
                         Future Interfaces // Immersive Experiences
@@ -155,7 +155,7 @@ export default function Footer() {
                 <div className="w-full h-[1px] bg-white/10 rounded-full mb-8" />
 
                 {/* Copyright & Legal */}
-                <div 
+                <div
                     className="w-full flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-widest"
                     style={{ color: "var(--footer-copy-text, rgba(168, 212, 180, 0.6))" }}
                 >
@@ -177,13 +177,13 @@ export default function Footer() {
             {isServiceModalOpen && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
                     {/* Dark backing overlay */}
-                    <div 
-                        className="absolute inset-0 bg-black/75 backdrop-blur-md cursor-pointer" 
+                    <div
+                        className="absolute inset-0 bg-black/75 backdrop-blur-md cursor-pointer"
                         onClick={() => setIsServiceModalOpen(false)}
                     />
-                    
+
                     {/* Modal Card */}
-                    <div 
+                    <div
                         className="relative w-full max-w-xl bg-zinc-900/90 border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col items-center justify-center text-center z-10"
                         style={{
                             boxShadow: "0 0 50px rgba(0,0,0,0.8), inset 0 1px 0 0 rgba(255,255,255,0.05)"
@@ -199,7 +199,7 @@ export default function Footer() {
                         <p className="text-white/45 text-xs md:text-sm max-w-md leading-relaxed mb-8">
                             Select a category below to instantly draft a customized message and start a chat on WhatsApp.
                         </p>
-                        
+
                         {/* Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
                             {services.map((s, idx) => {

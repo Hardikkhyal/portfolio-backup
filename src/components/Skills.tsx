@@ -78,19 +78,19 @@ export default function Skills() {
 
   const cardLayouts = [
     {
-      desktop: { left: "3%", top: "16%", width: "21%", rotate: -5 },
+      desktop: { left: "2%", top: "3%", width: "21%", rotate: -5 },
       mobile: { left: "3%", top: "5%", width: "44%", rotate: -4 }
     },
     {
-      desktop: { left: "26%", top: "42%", width: "22%", rotate: 4 },
+      desktop: { left: "26.5%", top: "22%", width: "21%", rotate: 4 },
       mobile: { left: "51%", top: "22%", width: "45%", rotate: 5 }
     },
     {
-      desktop: { left: "50%", top: "14%", width: "21%", rotate: -3 },
+      desktop: { left: "51%", top: "3%", width: "21%", rotate: -3 },
       mobile: { left: "3%", top: "41%", width: "44%", rotate: -3 }
     },
     {
-      desktop: { left: "73%", top: "40%", width: "22%", rotate: 5 },
+      desktop: { left: "75.5%", top: "22%", width: "21%", rotate: 5 },
       mobile: { left: "51%", top: "60%", width: "45%", rotate: 4 }
     }
   ];
@@ -111,6 +111,20 @@ export default function Skills() {
       const changed = coords.some((c, i) => !prev[i] || c.x !== prev[i].x || c.y !== prev[i].y);
       return changed ? coords : prev;
     });
+
+    requestAnimationFrame(() => {
+      yarnRefs.current.forEach((path, idx) => {
+        if (!path) return;
+        const len = path.getTotalLength();
+        if (len > 0) {
+          path.style.strokeDasharray = `${len} ${len}`;
+          const shadow = document.querySelector(`.yarn-path-shadow-${idx}`) as SVGPathElement | null;
+          if (shadow) {
+            shadow.style.strokeDasharray = `${len} ${len}`;
+          }
+        }
+      });
+    });
   };
 
   // Handle Resize and Initial Mount update
@@ -124,12 +138,14 @@ export default function Skills() {
     window.addEventListener("resize", handleResize);
 
     const t1 = setTimeout(updateStringCoords, 100);
-    const t2 = setTimeout(updateStringCoords, 500);
+    const t2 = setTimeout(updateStringCoords, 300);
+    const t3 = setTimeout(updateStringCoords, 600);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       clearTimeout(t1);
       clearTimeout(t2);
+      clearTimeout(t3);
     };
   }, []);
 
@@ -163,14 +179,14 @@ export default function Skills() {
       if (!path) return;
       const len = path.getTotalLength();
       gsap.set(path, {
-        strokeDasharray: len,
+        strokeDasharray: `${len} ${len}`,
         strokeDashoffset: len,
         opacity: 0
       });
       const shadow = document.querySelector(`.yarn-path-shadow-${idx}`);
       if (shadow) {
         gsap.set(shadow, {
-          strokeDasharray: len,
+          strokeDasharray: `${len} ${len}`,
           strokeDashoffset: len,
           opacity: 0
         });
@@ -181,9 +197,9 @@ export default function Skills() {
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: isMobile ? "+=95%" : "+=130%",
+        end: isMobile ? "+=80%" : "+=100%",
         pin: true,
-        scrub: 0.5,
+        scrub: 0.3,
         anticipatePin: 1,
       }
     });
@@ -194,17 +210,17 @@ export default function Skills() {
         opacity: 1,
         strokeDashoffset: 0,
         duration: 1.0,
-        ease: "none"
+        ease: "power1.inOut"
       });
 
       // Small pause in scroll between paths drawing
       if (i < cards.length - 2) {
-        tl.to({}, { duration: 0.25 });
+        tl.to({}, { duration: 0.15 });
       }
     }
 
     // Add landing padding at the end of the timeline to allow completion before unpinning
-    tl.to({}, { duration: 0.5 });
+    tl.to({}, { duration: 0.3 });
 
     return () => {
       if (tl.scrollTrigger) tl.scrollTrigger.kill();
@@ -220,19 +236,19 @@ export default function Skills() {
       style={{ backgroundColor: 'var(--skills-bg, #19350C)' }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.01),transparent_70%)] pointer-events-none z-0" />
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none opacity-25 mix-blend-overlay z-0"
         style={{ backgroundImage: 'url("/image.png")' }}
       />
       <GridOverlay />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10 w-full">
+      <div className="max-w-[94vw] mx-auto px-4 md:px-8 relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center w-full mb-10 relative"
+          className="text-center w-full mb-8 relative"
         >
           <Stamp className="absolute top-[55%] right-2 md:right-12 w-36 h-36 md:w-48 md:h-48 opacity-[0.12] rotate-[-12deg] pointer-events-none z-0" color="var(--skills-stamp-color, #B22222)" />
           <span className="text-luxury-gold text-xs font-bold uppercase tracking-[0.25em] mb-3 block relative z-10">
@@ -247,14 +263,14 @@ export default function Skills() {
         {/* Polaroid Evidence Board */}
         <div
           ref={boardRef}
-          className="relative w-full h-[880px] md:h-[680px] overflow-hidden"
+          className="relative w-full h-[880px] md:h-[600px] overflow-visible"
         >
           <div className="absolute top-4 left-4 text-white/20 text-[0.6rem] font-mono tracking-widest z-10 select-none">
             [ DOSSIER / STACK_EVIDENCE_ROOM ]
           </div>
 
           {/* Ripped Memo Case brief */}
-          <div className="absolute top-[8%] left-[4%] w-[200px] text-stone-800 p-4 shadow-md border border-stone-300 font-sans rotate-[-3deg] hidden md:block z-10" style={{ backgroundColor: "var(--skills-memo-bg, #fcfbf9)" }}>
+          <div className="absolute top-[1%] left-[0%] w-[200px] text-stone-800 p-4 shadow-md border border-stone-300 font-sans rotate-[-3deg] hidden md:block z-10" style={{ backgroundColor: "var(--skills-memo-bg, #fcfbf9)" }}>
             <div className="absolute -top-3 left-[15%] w-3.5 h-3.5 rounded-full bg-blue-600 shadow-sm border border-blue-700 flex items-center justify-center pointer-events-none">
               <div className="absolute top-2.5 left-2.5 w-1 h-2 bg-black/35 origin-top-left rotate-[35deg] rounded-full blur-[0.5px]" />
             </div>
@@ -377,7 +393,7 @@ export default function Skills() {
                   <h3 className="text-xs md:text-sm font-black tracking-wider text-stone-800 leading-tight uppercase font-display">
                     {skill.title}
                   </h3>
-                  <p className="text-[0.6rem] md:text-[0.7rem] text-stone-600 leading-relaxed font-light font-sans line-clamp-3 select-text pointer-events-auto">
+                  <p className="text-[0.75rem] md:text-[0.85rem] text-white leading-relaxed font-light tracking-wider font-sans line-clamp-3 select-text pointer-events-auto">
                     {skill.description}
                   </p>
 
@@ -386,7 +402,7 @@ export default function Skills() {
                     {skill.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[0.55rem] bg-stone-100 border border-amber-800/15 text-amber-900/85 px-1.5 py-0.5 rounded font-mono tracking-wider font-semibold"
+                        className="text-[0.6rem] md:text-[0.65rem] bg-stone-100 border border-amber-800/15 text-amber-900/85 px-1.5 py-0.5 rounded font-mono tracking-wider font-normal"
                       >
                         {tag}
                       </span>

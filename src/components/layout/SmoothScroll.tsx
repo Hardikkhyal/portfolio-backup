@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, ReactNode } from "react";
 import gsap from "gsap";
+import { LENIS_EASING, LENIS_DEFAULT_DURATION } from "@/lib/utils";
 
 interface SmoothScrollProps {
   children: ReactNode;
@@ -28,14 +29,14 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       gsap.registerPlugin(ScrollTrigger);
 
       lenisInstance = new Lenis({
-        duration: 2.5, // Increased for a highly luxurious, slow, and soft deceleration curve
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        duration: LENIS_DEFAULT_DURATION,
+        easing: LENIS_EASING,
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        syncTouch: true,       // Force smooth touch interpolation to override native fast momentum on mobile!
-        wheelMultiplier: 0.5,  // Dramatically reduce scroll speed per mouse click
-        touchMultiplier: 0.5,  // Dramatically reduce touch swipe distance to prevent fast flying on phones
+        syncTouch: false,      // Allow native smooth touch momentum on mobile devices
+        wheelMultiplier: 1.0,  // Standard responsive 1:1 scroll speed
+        touchMultiplier: 1.0,  // Standard responsive touch sensitivity
       });
 
       lenisRef.current = lenisInstance;
@@ -48,7 +49,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       };
 
       gsap.ticker.add(rafCallback);
-      gsap.ticker.lagSmoothing(0);
+      gsap.ticker.lagSmoothing(500, 33); // Enable GSAP lag smoothing recovery for smooth rendering under load
     });
 
     return () => {

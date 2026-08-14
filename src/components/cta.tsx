@@ -220,7 +220,7 @@ export default function BB() {
       {/* Hidden Content revealed upon Click */}
       <div className={`bb-content ${isEntered ? "active" : ""}`}>
         <p>
-          I am a creative developer focusing on high-end interactions, elegant motion system design, and ergonomic digital products. Let&apos;s create something extraordinary.
+          I am a creative developer focusing on <span className="text-luxury-gold font-medium">high-end interactions</span>, <span className="text-luxury-gold font-medium">elegant motion systems</span>, and <span className="text-luxury-gold font-medium">ergonomic digital products</span>. Let&apos;s create something extraordinary.
         </p>
         <button className="bb-reset" onClick={handleResetClick}>
           Replay Circles
