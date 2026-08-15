@@ -45,7 +45,6 @@ export default function AboutMe() {
             start: "top bottom",
             end: "bottom top",
             scrub: true,
-            fastScrollEnd: true,
           },
         };
 
@@ -437,8 +436,8 @@ function initRadialTextMarquee() {
         loopLen = Math.max(loopLen || 0, 1);
 
         const pathLen = st.path.getTotalLength ? st.path.getTotalLength() : wrapW;
-        const targetCover = Math.max(pathLen * 4, wrapW * 8);
-        const reps = clamp(Math.ceil(targetCover / loopLen) + 6, 6, 600);
+        const targetCover = Math.max(pathLen * 3, wrapW * 4);
+        const reps = clamp(Math.ceil(targetCover / loopLen) + 4, 4, 150);
 
         buildRun(st.tp, baseText, spacer, spacerColor, pad, reps, typo.lsPx, typo.tt);
 
@@ -499,9 +498,17 @@ function initRadialTextMarquee() {
     }
 
     if (window.ResizeObserver) {
-      const ro = new ResizeObserver(schedule);
+      let lastW = wrap.clientWidth;
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const newW = entry.target ? entry.target.clientWidth : wrap.clientWidth;
+          if (Math.abs(newW - lastW) > 5) {
+            lastW = newW;
+            schedule();
+          }
+        }
+      });
       ro.observe(wrap);
-      ro.observe(textEl);
       observers.push(ro);
     } else {
       window.addEventListener("resize", schedule);
